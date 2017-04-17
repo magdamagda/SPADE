@@ -1,5 +1,11 @@
 #include "sequence.h"
 
+Sequence::Sequence(unsigned int atom){
+    this->events = vector<vector<unsigned int> >();
+    this->events.push_back(vector<unsigned int>());
+    this->events[0].push_back(atom);
+}
+
 Sequence::Sequence(vector<vector<unsigned int> > &events)
 {
     this->events = events;

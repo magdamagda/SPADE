@@ -11,6 +11,7 @@ using namespace std;
 class Sequence
 {
 public:
+    Sequence(unsigned int atom);
     Sequence(vector<vector<unsigned int> > &events);
     void addEvent(vector<unsigned int> event);
     bool isSubset(Sequence &other);
@@ -19,6 +20,14 @@ public:
     vector < vector<unsigned int> > getEventsWithoutLastElement();
     string printSequence();
 
+    void setSupport(unsigned int s){
+        this->support = s;
+    }
+
+    unsigned int getSupport(){
+        return this->support;
+    }
+
     vector < vector<unsigned int> >& getEvents(){
         return events;
     }
@@ -26,7 +35,7 @@ public:
 private:
     vector < vector<unsigned int> > events;
     bool isSubset(const vector < vector<unsigned int> > &otherEvents);
-
+    unsigned int support;
 
 };
 
