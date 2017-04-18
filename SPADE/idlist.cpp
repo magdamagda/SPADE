@@ -12,6 +12,17 @@ IdList::IdList(Sequence *s)
 void IdList::addSidEid(unsigned int sid, unsigned int eid){
     if(this->idlist.find(sid)==this->idlist.end()){
         this->idlist[sid];
+        this->idlist[sid].push_back(eid);
     }
-    this->idlist[sid].push_back(eid);
+    else if(find(idlist[sid].begin(), idlist[sid].end(), eid)!=idlist[sid].end()){
+        this->idlist[sid].push_back(eid);
+    }
+}
+
+bool IdList::isSid(unsigned int sid){
+    return this->idlist.find(sid)!=this->idlist.end();
+}
+
+vector <unsigned int>& IdList::getEventsBySid(unsigned int sid){
+    return this->idlist[sid];
 }

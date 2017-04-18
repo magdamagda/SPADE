@@ -11,8 +11,21 @@ Sequence::Sequence(vector<vector<unsigned int> > &events)
     this->events = events;
 }
 
+Sequence::Sequence(Sequence *other){
+    this->events = other->getEvents();
+}
+
 void Sequence::addEvent(vector<unsigned int> event){
     events.push_back(event);
+}
+
+void Sequence::addEvent(unsigned int element){
+    events.push_back(vector<unsigned int>());
+    events.back().push_back(element);
+}
+
+void Sequence::addElementToLastEvent(unsigned int element){
+    events.back().push_back(element);
 }
 
 bool Sequence::isSubset(Sequence &other){
@@ -57,6 +70,10 @@ vector < vector<unsigned int> > Sequence::getEventsWithoutLastElement(){
         result.back().pop_back();
     }
     return result;
+}
+
+unsigned int Sequence::getLastElement(){
+    return events.back().back();
 }
 
 string Sequence::printSequence(){

@@ -14,7 +14,7 @@ public:
     DataSetReader();
     bool open(string& filename);
     Transaction* getTransaction();
-    bool close();
+    void close();
     bool end();
 
 private:

@@ -13,7 +13,11 @@ class Sequence
 public:
     Sequence(unsigned int atom);
     Sequence(vector<vector<unsigned int> > &events);
+    Sequence(Sequence *other);
     void addEvent(vector<unsigned int> event);
+    void addEvent(unsigned int element);
+    void addElementToLastEvent(unsigned int element);
+    unsigned int getLastElement();
     bool isSubset(Sequence &other);
     bool isSuperset(Sequence &other);
     bool isLastSingleton();

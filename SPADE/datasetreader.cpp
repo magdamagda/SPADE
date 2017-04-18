@@ -28,6 +28,6 @@ Transaction *DataSetReader::getTransaction(){
     return transaction;
 }
 
-bool DataSetReader::close(){
+void DataSetReader::close(){
     f.close();
 }
