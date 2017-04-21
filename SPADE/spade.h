@@ -15,6 +15,7 @@ class Spade
 public:
     Spade();
     void calculate(string& input, DataSetReader* dataReader, unsigned int minSup);
+    // test comment
 
 private:
     vector<Sequence*> freqSequences;
