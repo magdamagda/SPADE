@@ -15,7 +15,6 @@ class Spade
 public:
     Spade();
     void calculate(string& input, DataSetReader* dataReader, unsigned int minSup);
-    // test comment
 
 private:
     vector<Sequence*> freqSequences;
@@ -27,8 +26,9 @@ private:
 
     unsigned int addToAtoms(string atom);
     vector <IdList*> readFrequentOneSeq(string& input, DataSetReader* dataReader, unsigned int minSup);
-    vector <IdList*> readFrequentTwoSeq(vector <IdList*>& freqOneSeq, unsigned int minSup);
     vector <IdList*> temporalJoin(IdList* first, IdList* second);
+    IdList* equalityJoin(IdList* first, IdList* second);
+    IdList* firstSecondJoin(IdList* first, IdList* second);
     void EnumerateFrequentSeq(vector <IdList*> sequences, unsigned int minSup);
 
 };

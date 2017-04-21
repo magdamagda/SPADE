@@ -40,6 +40,8 @@ public:
         sequence->setSupport(idlist.size());
     }
 
+    void sortEvents();
+
 private:
     Sequence* sequence;
     map < unsigned int, vector<unsigned int> > idlist;

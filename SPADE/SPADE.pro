@@ -17,7 +17,8 @@ SOURCES += main.cpp \
     sequence.cpp \
     generatorsrep.cpp \
     closedseqrep.cpp \
-    transaction.cpp
+    transaction.cpp \
+    sequenceswriter.cpp
 
 # The following define makes your compiler emit warnings if you use
 # any feature of Qt which as been marked deprecated (the exact warnings
@@ -37,4 +38,5 @@ HEADERS += \
     sequence.h \
     generatorsrep.h \
     closedseqrep.h \
-    transaction.h
+    transaction.h \
+    sequenceswriter.h

@@ -24,5 +24,11 @@ bool IdList::isSid(unsigned int sid){
 }
 
 vector <unsigned int>& IdList::getEventsBySid(unsigned int sid){
-    return this->idlist[sid];
+    return this->idlist.at(sid);
+}
+
+void IdList::sortEvents(){
+    for(auto item:this->idlist){
+        sort(item.second.begin(), item.second.end());
+    }
 }
