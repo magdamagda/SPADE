@@ -29,5 +29,4 @@
 *.app
 
 #qt
-*.pro
 *.pro.user
