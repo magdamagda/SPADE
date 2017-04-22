@@ -21,7 +21,7 @@ public:
     bool isSubset(Sequence &other);
     bool isSuperset(Sequence &other);
     bool isLastSingleton();
-    vector < vector<unsigned int> > getEventsWithoutLastElement();
+    vector<vector<unsigned int> > getEventsWithoutLastElement();
     string printSequence();
 
     void setSupport(unsigned int s){

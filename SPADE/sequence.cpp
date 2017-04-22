@@ -61,7 +61,7 @@ bool Sequence::isLastSingleton(){
     return false;
 }
 
-vector < vector<unsigned int> > Sequence::getEventsWithoutLastElement(){
+vector<vector<unsigned int> > Sequence::getEventsWithoutLastElement(){
     if (isLastSingleton()){
         return vector < vector<unsigned int> >(events.begin(), events.end()-1);
     }

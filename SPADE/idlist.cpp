@@ -14,7 +14,7 @@ void IdList::addSidEid(unsigned int sid, unsigned int eid){
         this->idlist[sid];
         this->idlist[sid].push_back(eid);
     }
-    else if(find(idlist[sid].begin(), idlist[sid].end(), eid)!=idlist[sid].end()){
+    else if(find(idlist[sid].begin(), idlist[sid].end(), eid)==idlist[sid].end()){
         this->idlist[sid].push_back(eid);
     }
 }

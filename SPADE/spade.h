@@ -15,6 +15,12 @@ class Spade
 public:
     Spade();
     void calculate(string& input, DataSetReader* dataReader, unsigned int minSup);
+    vector<Sequence*>& getFrequentSequences(){
+        return freqSequences;
+    }
+    vector<Sequence*>& getMinInfrequentGenerators(){
+        return minInfreqGenerators;
+    }
 
 private:
     vector<Sequence*> freqSequences;

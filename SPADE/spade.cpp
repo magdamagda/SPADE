@@ -7,7 +7,7 @@ Spade::Spade()
 
 void Spade::calculate(string& input, DataSetReader* dataReader, unsigned int minSup){
     vector<IdList*> freqOneSeq = this->readFrequentOneSeq(input, dataReader, minSup);
-    temporalJoin(freqOneSeq[0], freqOneSeq[1]);
+    this->EnumerateFrequentSeq(freqOneSeq, minSup);
 }
 
 vector <IdList*> Spade::readFrequentOneSeq(string& input, DataSetReader* dataReader, unsigned int minSup){
@@ -69,8 +69,8 @@ vector <IdList*> Spade::temporalJoin(IdList* first, IdList* second){
             IdList* sequence = this->firstSecondJoin(first, second);
             if(sequence!=nullptr){
                 result.push_back(sequence);
-                return result;
             }
+            return result;
         }
         else{
             return result;
@@ -160,9 +160,15 @@ IdList *Spade::firstSecondJoin(IdList* first, IdList* second){
 }
 
 void Spade::EnumerateFrequentSeq(vector <IdList*> sequences, unsigned int minSup){
+    if (sequences.size() == 0){
+        return;
+    }
     vector<IdList*> newFreqSequences;
     for(auto it1 = sequences.begin(); it1!=sequences.end(); ++it1){
         for(auto it2 = it1; it2!=sequences.end(); ++it2){
+            if((*it1)->getSequence()->getEventsWithoutLastElement() != (*it2)->getSequence()->getEventsWithoutLastElement()){
+                break;
+            }
             vector<IdList*> newSequences = this->temporalJoin(*it1, *it2);
             for(IdList* s:newSequences){
                 if(s->size()>minSup){

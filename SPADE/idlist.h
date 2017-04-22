@@ -19,7 +19,7 @@ public:
         return sequence;
     }
 
-    int size(){
+    unsigned int size(){
         return this->idlist.size();
     }
 
