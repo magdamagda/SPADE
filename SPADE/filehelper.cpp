@@ -8,7 +8,7 @@ FileHelper::FileHelper()
 void FileHelper::writeSequencesToFile(const string &fileName, const vector<Sequence*>& sequences){
     ofstream f = ofstream(fileName);
     for(Sequence* s:sequences){
-        f<<s->printSequence()<<endl;
+        f<<s->printSequence()<<"\t"<<s->getSupport()<<endl;
     }
     f.close();
 }
@@ -17,7 +17,7 @@ void FileHelper::writeEncodedSequencesToFile(const string& fileName, const vecto
                                              const unordered_map<unsigned int, string>& codeToName){
     ofstream f = ofstream(fileName);
     for(Sequence* s:sequences){
-        f<<s->printEncodedSequence(codeToName)<<endl;
+        f<<s->printEncodedSequence(codeToName)<<"\t"<<s->getSupport()<<endl;
     }
     f.close();
 }

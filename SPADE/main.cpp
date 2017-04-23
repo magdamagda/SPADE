@@ -23,8 +23,8 @@ void printEncodedSequences(vector<Sequence*>& sequences, unordered_map<unsigned 
 
 int main(int argc, char *argv[])
 {
-    int minSup=1;
-    string filename="../datasets/zaki.txt";
+    int minSup=10;
+    string filename="../datasets/tags.data";
     DataSetReader* dataReader = new DataSetReader();
     Spade spade;
     spade.calculate(filename, dataReader, minSup);
