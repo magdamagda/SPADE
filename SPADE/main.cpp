@@ -5,6 +5,7 @@
 #include "spade.h"
 #include "datasetreader.h"
 #include <unordered_map>
+#include "filehelper.h"
 
 using namespace std;
 
@@ -27,15 +28,16 @@ int main(int argc, char *argv[])
     DataSetReader* dataReader = new DataSetReader();
     Spade spade;
     spade.calculate(filename, dataReader, minSup);
-    cout<<"Frequent sequences: "<<endl;
-    printEncodedSequences(spade.getFrequentSequences(), spade.getAtomsCodeToName());
-    cout<<"Minimal infrequent generators: "<<endl;
-    printEncodedSequences(spade.getMinInfrequentGenerators(), spade.getAtomsCodeToName());
+    FileHelper fileHelper;
+    fileHelper.writeEncodedSequencesToFile("../results/freqSequences.txt", spade.getFrequentSequences(), spade.getAtomsCodeToName());
+    fileHelper.writeCodeToNameMapToFile("../results/codeToNameMap.txt", spade.getAtomsCodeToName());
+    fileHelper.writeSequencesToFile("../results/minInfreqGenerators.txt", spade.getMinInfrequentGenerators());
 
-    // coding/encoding
-    // mail
-    // reprezentacje
-    // empty sequence as frequent sequence
+    //cout<<"Frequent sequences: "<<endl;
+    //printEncodedSequences(spade.getFrequentSequences(), spade.getAtomsCodeToName());
+    //cout<<"Minimal infrequent generators: "<<endl;
+    //printEncodedSequences(spade.getMinInfrequentGenerators(), spade.getAtomsCodeToName());
+
 
     return 0;
 }

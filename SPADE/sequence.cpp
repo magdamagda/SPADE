@@ -94,12 +94,12 @@ string Sequence::printSequence(){
     return result;
 }
 
-string Sequence::printEncodedSequence(unordered_map<unsigned int, string>& atomsCodeToName){
+string Sequence::printEncodedSequence(const unordered_map<unsigned int, string> &atomsCodeToName){
     string result="<";
     for(auto event:events){
         result+="(";
         for(unsigned int element : event){
-            result+=atomsCodeToName[element];
+            result+=atomsCodeToName.at(element);
             result+=",";
         }
         result+=")";

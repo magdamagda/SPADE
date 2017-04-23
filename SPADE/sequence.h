@@ -25,7 +25,7 @@ public:
     bool isLastSingleton();
     vector<vector<unsigned int> > getEventsWithoutLastElement();
     string printSequence();
-    string printEncodedSequence(unordered_map<unsigned int, string>& atomsCodeToName);
+    string printEncodedSequence(const unordered_map<unsigned int, string>& atomsCodeToName);
     bool operator==(Sequence & other);
 
     void setSupport(unsigned int s){
