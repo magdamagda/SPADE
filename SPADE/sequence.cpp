@@ -1,5 +1,9 @@
 #include "sequence.h"
 
+Sequence::Sequence(){
+
+}
+
 Sequence::Sequence(unsigned int atom){
     this->events = vector<vector<unsigned int> >();
     this->events.push_back(vector<unsigned int>());
@@ -88,4 +92,53 @@ string Sequence::printSequence(){
     }
     result+=">";
     return result;
+}
+
+string Sequence::printEncodedSequence(unordered_map<unsigned int, string>& atomsCodeToName){
+    string result="<";
+    for(auto event:events){
+        result+="(";
+        for(unsigned int element : event){
+            result+=atomsCodeToName[element];
+            result+=",";
+        }
+        result+=")";
+    }
+    result+=">";
+    return result;
+}
+
+unsigned int Sequence::getSize(){
+    unsigned int size = 0;
+    for(auto event:events){
+        size+=event.size();
+    }
+    return size;
+}
+
+vector<Sequence*> Sequence::getSubsequences(){
+    vector<Sequence*> result;
+    unsigned int numOfAtoms = this->getSize();
+    for(unsigned int i = 0; i<numOfAtoms; ++i){
+        unsigned int pos = 0;
+        Sequence* subsequence = new Sequence();
+        for(vector<unsigned int> event:this->events){
+            vector<unsigned int> subsequence_event;
+            for(unsigned int element : event){
+                if(pos!=i){
+                    subsequence_event.push_back(element);
+                }
+                pos++;
+            }
+            if (subsequence_event.size()>0){
+                subsequence->addEvent(subsequence_event);
+            }
+        }
+        result.push_back(subsequence);
+    }
+    return result;
+}
+
+bool Sequence::operator==(Sequence & other){
+    return this->events==other.events;
 }

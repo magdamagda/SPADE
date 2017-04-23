@@ -21,6 +21,9 @@ public:
     vector<Sequence*>& getMinInfrequentGenerators(){
         return minInfreqGenerators;
     }
+    unordered_map<unsigned int, string>& getAtomsCodeToName(){
+        return this->atomsCodeToName;
+    }
 
 private:
     vector<Sequence*> freqSequences;
@@ -32,10 +35,12 @@ private:
 
     unsigned int addToAtoms(string atom);
     vector <IdList*> readFrequentOneSeq(string& input, DataSetReader* dataReader, unsigned int minSup);
-    vector <IdList*> temporalJoin(IdList* first, IdList* second);
-    IdList* equalityJoin(IdList* first, IdList* second);
-    IdList* firstSecondJoin(IdList* first, IdList* second);
+    vector <IdList*> temporalJoin(IdList* first, IdList* second, vector<Sequence *> &freqSequences);
+    IdList* equalityJoin(IdList* first, IdList* second, vector<Sequence *> &freqSequences);
+    IdList* firstSecondJoin(IdList* first, IdList* second, vector<Sequence *> &freqSequences);
     void EnumerateFrequentSeq(vector <IdList*> sequences, unsigned int minSup);
+    bool prune(Sequence* sequence, vector<Sequence *> &freqSequences);
+    bool isSequenceFrequent(Sequence* sequence, vector<Sequence *> freqSequences);
 
 };
 

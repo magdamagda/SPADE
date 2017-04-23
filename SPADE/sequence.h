@@ -5,12 +5,14 @@
 #include <list>
 #include <string>
 #include <algorithm>
+#include <unordered_map>
 
 using namespace std;
 
 class Sequence
 {
 public:
+    Sequence();
     Sequence(unsigned int atom);
     Sequence(vector<vector<unsigned int> > &events);
     Sequence(Sequence *other);
@@ -23,6 +25,8 @@ public:
     bool isLastSingleton();
     vector<vector<unsigned int> > getEventsWithoutLastElement();
     string printSequence();
+    string printEncodedSequence(unordered_map<unsigned int, string>& atomsCodeToName);
+    bool operator==(Sequence & other);
 
     void setSupport(unsigned int s){
         this->support = s;
@@ -35,6 +39,9 @@ public:
     vector < vector<unsigned int> >& getEvents(){
         return events;
     }
+
+    vector<Sequence*> getSubsequences();
+    unsigned int getSize();
 
 private:
     vector < vector<unsigned int> > events;

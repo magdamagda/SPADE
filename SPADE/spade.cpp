@@ -57,7 +57,7 @@ unsigned int Spade::addToAtoms(string atom){
     return code;
 }
 
-vector <IdList*> Spade::temporalJoin(IdList* first, IdList* second){
+vector <IdList*> Spade::temporalJoin(IdList* first, IdList* second, vector<Sequence *> &freqSequences){
     vector <IdList*> result;
     Sequence* seq1 = first->getSequence();
     Sequence* seq2 = second->getSequence();
@@ -66,7 +66,7 @@ vector <IdList*> Spade::temporalJoin(IdList* first, IdList* second){
 
     if(seq1==seq2){
         if(seq1Singleton){
-            IdList* sequence = this->firstSecondJoin(first, second);
+            IdList* sequence = this->firstSecondJoin(first, second, freqSequences);
             if(sequence!=nullptr){
                 result.push_back(sequence);
             }
@@ -78,32 +78,36 @@ vector <IdList*> Spade::temporalJoin(IdList* first, IdList* second){
     }
 
     if(seq1Singleton && seq2Singleton){
-        IdList* sequence = this->equalityJoin(first, second);
+        IdList* sequence = this->equalityJoin(first, second, freqSequences);
         if (sequence!=nullptr) result.push_back(sequence);
-        sequence = this->firstSecondJoin(first, second);
+        sequence = this->firstSecondJoin(first, second, freqSequences);
         if (sequence!=nullptr) result.push_back(sequence);
-        sequence = this->firstSecondJoin(second, first);
+        sequence = this->firstSecondJoin(second, first, freqSequences);
         if (sequence!=nullptr) result.push_back(sequence);
     } else if (seq1Singleton && !seq2Singleton){
-        IdList* sequence = this->firstSecondJoin(second, first);
+        IdList* sequence = this->firstSecondJoin(second, first, freqSequences);
         if (sequence!=nullptr) result.push_back(sequence);
     } else if (!seq1Singleton && seq2Singleton){
-        IdList* sequence = this->firstSecondJoin(first, second);
+        IdList* sequence = this->firstSecondJoin(first, second, freqSequences);
         if (sequence!=nullptr) result.push_back(sequence);
     } else{
-        IdList* sequence = this->equalityJoin(first, second);
+        IdList* sequence = this->equalityJoin(first, second, freqSequences);
         if (sequence!=nullptr) result.push_back(sequence);
     }
 
     return result;
 }
 
-IdList* Spade::equalityJoin(IdList* first, IdList* second){
+IdList* Spade::equalityJoin(IdList* first, IdList* second, vector<Sequence *> &freqSequences){
     Sequence* seq1 = first->getSequence();
     Sequence* seq2 = second->getSequence();
 
     Sequence* newSequence = new Sequence(seq1);
     newSequence->addElementToLastEvent(seq2->getLastElement());
+    if(this->prune(newSequence, freqSequences)){
+        delete newSequence;
+        return nullptr;
+    }
     IdList* result = new IdList(newSequence);
 
     for (auto& sequence:(*first)){
@@ -125,12 +129,16 @@ IdList* Spade::equalityJoin(IdList* first, IdList* second){
     return nullptr;
 }
 
-IdList *Spade::firstSecondJoin(IdList* first, IdList* second){
+IdList *Spade::firstSecondJoin(IdList* first, IdList* second, vector<Sequence *> &freqSequences){
     Sequence* seq1 = first->getSequence();
     Sequence* seq2 = second->getSequence();
 
     Sequence* firstSecondSeq = new Sequence(seq1);
     firstSecondSeq->addEvent(seq2->getLastElement());
+    if(this->prune(firstSecondSeq, freqSequences)){
+        delete firstSecondSeq;
+        return nullptr;
+    }
     IdList* result = new IdList(firstSecondSeq);
 
     for (auto& sequence:(*first)){
@@ -163,13 +171,17 @@ void Spade::EnumerateFrequentSeq(vector <IdList*> sequences, unsigned int minSup
     if (sequences.size() == 0){
         return;
     }
+    vector<Sequence*> prevFreqSequences;
+    for(IdList* s:sequences){
+        prevFreqSequences.push_back(s->getSequence());
+    }
     vector<IdList*> newFreqSequences;
     for(auto it1 = sequences.begin(); it1!=sequences.end(); ++it1){
         for(auto it2 = it1; it2!=sequences.end(); ++it2){
             if((*it1)->getSequence()->getEventsWithoutLastElement() != (*it2)->getSequence()->getEventsWithoutLastElement()){
                 break;
             }
-            vector<IdList*> newSequences = this->temporalJoin(*it1, *it2);
+            vector<IdList*> newSequences = this->temporalJoin(*it1, *it2, prevFreqSequences);
             for(IdList* s:newSequences){
                 if(s->size()>minSup){
                     s->sortEvents();
@@ -184,4 +196,21 @@ void Spade::EnumerateFrequentSeq(vector <IdList*> sequences, unsigned int minSup
         }
     }
     this->EnumerateFrequentSeq(newFreqSequences, minSup);
+}
+
+bool Spade::prune(Sequence* sequence, vector<Sequence*>& freqSequences){
+    for(Sequence* subsequence:sequence->getSubsequences()){
+        if(!isSequenceFrequent(subsequence, freqSequences)){
+            return true;
+        }
+    }
+    return false;
+}
+
+bool Spade::isSequenceFrequent(Sequence* sequence, vector<Sequence *> freqSequences){
+    for(Sequence* freqSequence:freqSequences){
+        if(*sequence == *freqSequence)
+            return true;
+    }
+    return false;
 }
