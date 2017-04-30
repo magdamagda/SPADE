@@ -119,6 +119,9 @@ unsigned int Sequence::getSize(){
 vector<Sequence*> Sequence::getSubsequences(){
     vector<Sequence*> result;
     unsigned int numOfAtoms = this->getSize();
+    if(numOfAtoms > 0){
+        result.push_back(new Sequence());
+    }
     for(unsigned int i = 0; i<numOfAtoms; ++i){
         unsigned int pos = 0;
         Sequence* subsequence = new Sequence();

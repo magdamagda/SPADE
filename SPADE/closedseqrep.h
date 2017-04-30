@@ -1,8 +1,9 @@
 #ifndef CLOSEDSEQREP_H
 #define CLOSEDSEQREP_H
+#include "representation.h"
 
 
-class ClosedSeqRep
+class ClosedSeqRep : public Representation
 {
 public:
     ClosedSeqRep();
