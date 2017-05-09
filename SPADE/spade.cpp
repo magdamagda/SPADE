@@ -9,6 +9,7 @@ void Spade::calculate(string& input, DataSetReader* dataReader, unsigned int min
     vector<IdList*> freqOneSeq = this->readFrequentOneSeq(input, dataReader, minSup, generateMinInfGen);
     this->EnumerateFrequentSeq(freqOneSeq, minSup, generateMinInfGen);
     if(generateMinInfGen){
+        this->calculateFreqSequencesByLength();
         this->pruneInfrequentGenerators();
     }
 }
@@ -40,8 +41,9 @@ vector <IdList*> Spade::readFrequentOneSeq(string& input, DataSetReader* dataRea
     // add empty sequence
     Sequence* emptySequence = new Sequence();
     emptySequence->setSupport(allSequencesNum.size());
-    if(emptySequence->getSupport() > minSup)
+    if(emptySequence->getSupport() > minSup){
         this->freqSequences.push_back(emptySequence);
+    }
     else if(generateMinInfGen)
         this->minInfreqGenerators.push_back(emptySequence);
     else
@@ -224,7 +226,8 @@ bool Spade::prune(Sequence* sequence){
 }
 
 bool Spade::isSequenceFrequent(Sequence* sequence){
-    for(Sequence* freqSequence:this->freqSequences){
+    unsigned int size = sequence->getSize();
+    for(Sequence* freqSequence:this->freqSequencesByLength[size]){
         if(*sequence == *freqSequence)
             return true;
     }
@@ -242,4 +245,14 @@ void Spade::pruneInfrequentGenerators(){
         }
     }
     this->minInfreqGenerators = prunedInfGenerators;
+}
+
+void Spade::calculateFreqSequencesByLength(){
+    for(auto s:this->freqSequences){
+        unsigned int size = s->getSize();
+        if(size == this->freqSequencesByLength.size()){
+            this->freqSequencesByLength.push_back(set<Sequence*>());
+        }
+        this->freqSequencesByLength[size].insert(s);
+    }
 }

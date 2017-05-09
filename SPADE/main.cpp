@@ -24,7 +24,7 @@ void printEncodedSequences(vector<Sequence*>& sequences, unordered_map<unsigned 
 int main(int argc, char *argv[])
 {
     int minSup=2;
-    string filename="../datasets/tags.data";
+    string filename="../datasets/zaki.txt";
     DataSetReader* dataReader = new DataSetReader();
     Spade spade;
     spade.calculate(filename, dataReader, minSup, true);
@@ -32,6 +32,8 @@ int main(int argc, char *argv[])
     fileHelper.writeEncodedSequencesToFile("../results/freqSequences.txt", spade.getFrequentSequences(), spade.getAtomsCodeToName());
     fileHelper.writeCodeToNameMapToFile("../results/codeToNameMap.txt", spade.getAtomsCodeToName());
     fileHelper.writeSequencesToFile("../results/minInfreqGenerators.txt", spade.getMinInfrequentGenerators());
+
+    vector<set<Sequence*> > freqSeq = spade.getFreqSequencesByLength();
 
     //cout<<"Frequent sequences: "<<endl;
     //printEncodedSequences(spade.getFrequentSequences(), spade.getAtomsCodeToName());

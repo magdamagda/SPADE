@@ -28,6 +28,10 @@ public:
         return this->atomsCodeToName;
     }
 
+    vector<set<Sequence*> > getFreqSequencesByLength(){
+        return this->freqSequencesByLength;
+    }
+
 private:
     vector<Sequence*> freqSequences;
     vector<Sequence*> closedFreqSequences;
@@ -35,6 +39,7 @@ private:
     vector<Sequence*> minInfreqGenerators;
     unordered_map<unsigned int, string> atomsCodeToName;
     unordered_map<string, unsigned int> atomsNameToCode;
+    vector<set<Sequence*> > freqSequencesByLength;
 
     unsigned int addToAtoms(string atom);
     vector <IdList*> readFrequentOneSeq(string& input, DataSetReader* dataReader, unsigned int minSup, bool generateMinInfGen);
@@ -45,7 +50,7 @@ private:
     bool prune(Sequence* sequence);
     bool isSequenceFrequent(Sequence* sequence);
     void pruneInfrequentGenerators();
-
+    void calculateFreqSequencesByLength();
 };
 
 #endif // SPADE_H
