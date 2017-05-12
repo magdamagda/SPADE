@@ -12,5 +12,5 @@ void ClosedSeqRep::prepareRepresentaion(vector<Sequence> &frequentSequence){
 }
 
 vector<Sequence> ClosedSeqRep::findClosedSequences(vector<Sequence> &frequentSequence){
-
+    return vector<Sequence>();
 }

@@ -22,6 +22,8 @@ public:
     unsigned int getLastElement();
     bool isSubset(Sequence &other);
     bool isSuperset(Sequence &other);
+    bool isSubset(Sequence *other);
+    bool isSuperset(Sequence *other);
     bool isLastSingleton();
     vector<vector<unsigned int> > getEventsWithoutLastElement();
     string printSequence();

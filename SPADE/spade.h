@@ -9,13 +9,15 @@
 #include <string>
 #include <map>
 #include <unordered_map>
+#include <set>
+#include <iostream>
 #include <iterator>
 
 class Spade
 {
 public:
     Spade();
-    void calculate(string& input, DataSetReader* dataReader, unsigned int minSup);
+    void calculate(string& input, DataSetReader* dataReader, unsigned int minSup, bool generateMinInfGen=false);
     vector<Sequence*>& getFrequentSequences(){
         return freqSequences;
     }
@@ -26,6 +28,10 @@ public:
         return this->atomsCodeToName;
     }
 
+    vector<set<Sequence*> > getFreqSequencesByLength(){
+        return this->freqSequencesByLength;
+    }
+
 private:
     vector<Sequence*> freqSequences;
     vector<Sequence*> closedFreqSequences;
@@ -33,16 +39,18 @@ private:
     vector<Sequence*> minInfreqGenerators;
     unordered_map<unsigned int, string> atomsCodeToName;
     unordered_map<string, unsigned int> atomsNameToCode;
+    vector<set<Sequence*> > freqSequencesByLength;
 
     unsigned int addToAtoms(string atom);
-    vector <IdList*> readFrequentOneSeq(string& input, DataSetReader* dataReader, unsigned int minSup);
-    vector <IdList*> temporalJoin(IdList* first, IdList* second, vector<Sequence *> &freqSequences);
-    IdList* equalityJoin(IdList* first, IdList* second, vector<Sequence *> &freqSequences);
-    IdList* firstSecondJoin(IdList* first, IdList* second, vector<Sequence *> &freqSequences);
-    void EnumerateFrequentSeq(vector <IdList*> sequences, unsigned int minSup);
-    bool prune(Sequence* sequence, vector<Sequence *> &freqSequences);
-    bool isSequenceFrequent(Sequence* sequence, vector<Sequence *> freqSequences);
-
+    vector <IdList*> readFrequentOneSeq(string& input, DataSetReader* dataReader, unsigned int minSup, bool generateMinInfGen);
+    vector <IdList*> temporalJoin(IdList* first, IdList* second);
+    IdList* equalityJoin(IdList* first, IdList* second);
+    IdList* firstSecondJoin(IdList* first, IdList* second);
+    void EnumerateFrequentSeq(vector <IdList*> sequences, unsigned int minSup, bool generateMinInfGen);
+    bool prune(Sequence* sequence);
+    bool isSequenceFrequent(Sequence* sequence);
+    void pruneInfrequentGenerators();
+    void calculateFreqSequencesByLength();
 };
 
 #endif // SPADE_H

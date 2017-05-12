@@ -41,6 +41,15 @@ bool Sequence::isSuperset(Sequence &other){
     return other.isSubset(this->events);
 }
 
+bool Sequence::isSubset(Sequence *other){
+    vector < vector<unsigned int> > otherEvents = other->getEvents();
+    return isSubset(otherEvents);
+}
+
+bool Sequence::isSuperset(Sequence *other){
+    return other->isSubset(this);
+}
+
 bool Sequence::isSubset(const vector < vector<unsigned int> > &otherEvents){
     int nextEvent = 0;
     for (unsigned int i=0; i<events.size(); ++i){
@@ -48,7 +57,7 @@ bool Sequence::isSubset(const vector < vector<unsigned int> > &otherEvents){
         for(j=nextEvent; j<otherEvents.size(); ++j){
             if(includes(otherEvents[j].begin(), otherEvents[j].end(), events[i].begin(), events[i].end())){
                 nextEvent=j+1;
-                continue;
+                break;
             }
         }
         if(j==otherEvents.size()){
@@ -119,6 +128,9 @@ unsigned int Sequence::getSize(){
 vector<Sequence*> Sequence::getSubsequences(){
     vector<Sequence*> result;
     unsigned int numOfAtoms = this->getSize();
+    if(numOfAtoms > 0){
+        result.push_back(new Sequence());
+    }
     for(unsigned int i = 0; i<numOfAtoms; ++i){
         unsigned int pos = 0;
         Sequence* subsequence = new Sequence();
