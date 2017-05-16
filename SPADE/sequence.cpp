@@ -1,10 +1,11 @@
 #include "sequence.h"
 
 Sequence::Sequence(){
-
+    marked = false;
 }
 
 Sequence::Sequence(unsigned int atom){
+    marked = false;
     this->events = vector<vector<unsigned int> >();
     this->events.push_back(vector<unsigned int>());
     this->events[0].push_back(atom);
@@ -12,10 +13,12 @@ Sequence::Sequence(unsigned int atom){
 
 Sequence::Sequence(vector<vector<unsigned int> > &events)
 {
+    marked = false;
     this->events = events;
 }
 
 Sequence::Sequence(Sequence *other){
+    marked = false;
     this->events = other->getEvents();
 }
 

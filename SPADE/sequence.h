@@ -42,6 +42,14 @@ public:
         return events;
     }
 
+    bool isMarked(){
+        return marked;
+    }
+
+    void mark(bool value){
+        marked = value;
+    }
+
     vector<Sequence*> getSubsequences();
     unsigned int getSize();
 
@@ -49,6 +57,7 @@ private:
     vector < vector<unsigned int> > events;
     bool isSubset(const vector < vector<unsigned int> > &otherEvents);
     unsigned int support;
+    bool marked;
 
 };
 

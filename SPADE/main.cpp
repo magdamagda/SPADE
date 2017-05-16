@@ -6,6 +6,8 @@
 #include "datasetreader.h"
 #include <unordered_map>
 #include "filehelper.h"
+#include "closedseqrep.h"
+#include "sequencescalculator.h"
 
 
 using namespace std;
@@ -35,6 +37,8 @@ int main(int argc, char *argv[])
     fileHelper.writeSequencesToFile("../results/minInfreqGenerators.txt", spade.getMinInfrequentGenerators());
 
     vector<set<Sequence*> > freqSeq = spade.getFreqSequencesByLength();
+    SequencesCalculator::calculateClosedSequences(freqSeq, "../result/closedSequences.txt");
+    SequencesCalculator::calculateGenerators(freqSeq, "../result/Generators.txt");
 
     //cout<<"Frequent sequences: "<<endl;
     //printEncodedSequences(spade.getFrequentSequences(), spade.getAtomsCodeToName());
