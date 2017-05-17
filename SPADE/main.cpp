@@ -28,18 +28,25 @@ int main(int argc, char *argv[])
     DataSetReader* dataReader = new DataSetReader();
     Spade spade;
     spade.calculate(filename, dataReader, minSup, true);
-    FileHelper fileHelper;
-    fileHelper.writeEncodedSequencesToFile("../results/freqSequences.txt", spade.getFrequentSequences(), spade.getAtomsCodeToName());
-    fileHelper.writeCodeToNameMapToFile("../results/codeToNameMap.txt", spade.getAtomsCodeToName());
-    fileHelper.writeSequencesToFile("../results/minInfreqGenerators.txt", spade.getMinInfrequentGenerators());
+    FileHelper::writeEncodedSequencesToFile("../results/freqSequences.txt", spade.getFrequentSequences(), spade.getAtomsCodeToName());
+    FileHelper::writeCodeToNameMapToFile("../results/codeToNameMap.txt", spade.getAtomsCodeToName());
+    FileHelper::writeSequencesToFile("../results/minInfreqGenerators.txt", spade.getMinInfrequentGenerators());
 
     vector<set<Sequence*> > freqSeq = spade.getFreqSequencesByLength();
 
-    //cout<<"Frequent sequences: "<<endl;
-    //printEncodedSequences(spade.getFrequentSequences(), spade.getAtomsCodeToName());
-    //cout<<"Minimal infrequent generators: "<<endl;
-    //printEncodedSequences(spade.getMinInfrequentGenerators(), spade.getAtomsCodeToName());
+    int minSupport = 0;
+    string datasetPath = "";
+    string minInfrequentGeneratorsPath = "";
+    string closedFrequentSequencesPath = "";
+    string maxFrequentSequencesPath = "";
+    string frequentGeneratorsPath = "";
+    string sequencesPath = "";
+    string sequencesResultPath = "";
 
+    for (int i = 1; i < argc;) {
+        string arg = argv[i];
+
+    }
 
     return 0;
 }
