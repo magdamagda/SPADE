@@ -1,7 +1,6 @@
 #ifndef GENERATORSREPNEGATIVEBORDER_H
 #define GENERATORSREPNEGATIVEBORDER_H
 
-
 class GeneratorsRepNegativeBorder
 {
 public:
@@ -9,3 +8,4 @@ public:
 };
 
 #endif // GENERATORSREPNEGATIVEBORDER_H
+
