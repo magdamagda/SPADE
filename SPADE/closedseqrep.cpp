@@ -1,20 +1,15 @@
 #include "closedseqrep.h"
 
 
-ClosedSeqRep::ClosedSeqRep()
+ClosedSeqRep::ClosedSeqRep(string &closedSeqFile, string &codesFile)
 {
 
 }
 
-void ClosedSeqRep::prepareRepresentaion(vector<set<Sequence *> > frequentSequence){
-    vector<Sequence> closedSequence = this->findClosedSequences(frequentSequence);
-    //save to file
-    //for(auto sequence:frequentSequence){
-
-
+int ClosedSeqRep::calculateSupport(Sequence* sequence){
 
 }
 
-vector<Sequence> ClosedSeqRep::findClosedSequences(vector<set<Sequence *> > &frequentSequence){
-    return vector<Sequence>();
+void ClosedSeqRep::calculateSupport(string& inputFile, string& outputFile){
+
 }

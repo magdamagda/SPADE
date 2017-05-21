@@ -1,19 +1,22 @@
 #ifndef CLOSEDSEQREP_H
 #define CLOSEDSEQREP_H
 
-#include<vector>
-#include<sequence.h>
-#include<set>
+#include <vector>
+#include "sequence.h"
+#include "representation.h"
+#include <string>
+#include "filehelper.h"
 
+using namespace std;
 
-class ClosedSeqRep
+class ClosedSeqRep: public Representation
 {
 public:
-    ClosedSeqRep();
-    void prepareRepresentaion(vector<set<Sequence*> > frequentSequence);
+    ClosedSeqRep(string& closedSeqFile, string& codesFile);
+    virtual int calculateSupport(Sequence* sequence);
+    virtual void calculateSupport(string& inputFile, string& outputFile);
 
-private:
-    vector<Sequence> findClosedSequences(vector<set<Sequence*> > &frequentSequence);
+
 };
 
 #endif // CLOSEDSEQREP_H

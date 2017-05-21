@@ -57,7 +57,7 @@ void SequencesCalculator::calculateGenerators(vector<set<Sequence*> >sequences, 
         }
     }
 
-    f.writeSequencesToFile(file, Generators
+    f.writeSequencesToFile(file, Generators);
 }
 
 void SequencesCalculator::calculateMaxsequences(vector<set<Sequence*> >sequences, string file){
