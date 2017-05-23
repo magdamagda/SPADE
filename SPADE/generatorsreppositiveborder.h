@@ -1,11 +1,14 @@
 #ifndef GENERATORSREPPOSITIVEBORDER_H
 #define GENERATORSREPPOSITIVEBORDER_H
-#include <algorithm>
+#include "representation.h"
+#include <string>
 
-class GeneratorsRepPositiveBorder
+class GeneratorsRepPositiveBorder: public Representation
 {
 public:
-    GeneratorsRepPositiveBorder();
+    GeneratorsRepPositiveBorder(string& generatorsFile, string& positiveBorderFile, string &codesFile);
+    virtual int calculateSupport(Sequence* sequence);
+    virtual void calculateSupport(string& inputFile, string& outputFile);
 };
 
 #endif // GENERATORSREPPOSITIVEBORDER_H

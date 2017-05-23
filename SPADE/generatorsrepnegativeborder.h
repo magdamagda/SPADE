@@ -1,10 +1,15 @@
 #ifndef GENERATORSREPNEGATIVEBORDER_H
 #define GENERATORSREPNEGATIVEBORDER_H
 
-class GeneratorsRepNegativeBorder
+#include "representation.h"
+#include <string>
+
+class GeneratorsRepNegativeBorder: public Representation
 {
 public:
-    GeneratorsRepNegativeBorder();
+    GeneratorsRepNegativeBorder(string& generatorsFile, string& negativeBorderFile, string& codesFile);
+    virtual int calculateSupport(Sequence* sequence);
+    virtual void calculateSupport(string& inputFile, string& outputFile);
 };
 
 #endif // GENERATORSREPNEGATIVEBORDER_H

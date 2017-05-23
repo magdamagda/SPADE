@@ -11,10 +11,12 @@ class FileHelper
 {
 public:
     FileHelper();
-    void writeSequencesToFile(const string& fileName, const vector<Sequence*>& sequences);
-    void writeEncodedSequencesToFile(const string& fileName, const vector<Sequence*>& sequences, const unordered_map<unsigned int, string>& codeToName);
-    void writeCodeToNameMapToFile(const string &fileName, const unordered_map<unsigned int, string> &codeToName);
-    unordered_map<string, unsigned int> readNameToCodeMap(const string &fileName);
+    static void writeSequencesToFile(const string& fileName, const vector<Sequence*>& sequences);
+    static void writeEncodedSequencesToFile(const string& fileName, const vector<Sequence*>& sequences, const unordered_map<unsigned int, string>& codeToName);
+    static void writeCodeToNameMapToFile(const string &fileName, const unordered_map<unsigned int, string> &codeToName);
+    static unordered_map<string, unsigned int> readNameToCodeMap(const string &fileName);
+    static vector<Sequence*> readSequences(const string& fileName);
+    static vector<Sequence*> readSequences(const string& fileName, const unordered_map<unsigned int, string>& codeToName);
 };
 
 #endif // SEQUENCESWRITER_H

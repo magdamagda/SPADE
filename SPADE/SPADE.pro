@@ -3,13 +3,15 @@
 # Project created by QtCreator 2017-05-05T22:55:30
 #
 #-------------------------------------------------
+QT += core
+QT -= gui
 
-QT       += core gui
 CONFIG += c++11
 
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
-
 TARGET = SPADE
+CONFIG += console
+CONFIG -= app_bundle
+
 TEMPLATE = app
 
 # The following define makes your compiler emit warnings if you use
@@ -33,7 +35,9 @@ SOURCES += main.cpp \
     transaction.cpp \
     filehelper.cpp \
     generatorsreppositiveborder.cpp \
-    generatorsrepnegativeborder.cpp
+    generatorsrepnegativeborder.cpp \
+    representation.cpp \
+    sequencescalculator.cpp
 
 HEADERS += \
     datasetreader.h \
@@ -44,4 +48,6 @@ HEADERS += \
     transaction.h \
     filehelper.h \
     generatorsreppositiveborder.h \
-    generatorsrepnegativeborder.h
+    generatorsrepnegativeborder.h \
+    representation.h \
+    sequencescalculator.h
