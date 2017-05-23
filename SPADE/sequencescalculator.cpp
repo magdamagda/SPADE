@@ -6,16 +6,13 @@ SequencesCalculator::SequencesCalculator()
 }
 
 void SequencesCalculator::calculateClosedSequences(vector<set<Sequence*> > sequences, string file){
+    unmarkAllSequences(sequences);
     FileHelper f;
     vector<Sequence*> closedSequences;
-    cout<<"calculating closed sequences"<<endl;
     for(auto it = sequences.rbegin(); it!=sequences.rend(); ++it){
-        cout<<"row"<<endl;
         set<Sequence*> row = *it;
         for(Sequence* s:row){
-            cout<<"sequence: "<<s->printSequence()<<" "<<s->isMarked()<<endl;
             if(!s->isMarked()){
-                cout<<"closed sequence: "<<s->printSequence()<<endl;
                 closedSequences.push_back(s);
             }
             vector<Sequence*> subsequences = s->getSubsequences();
@@ -33,35 +30,56 @@ void SequencesCalculator::calculateClosedSequences(vector<set<Sequence*> > seque
 }
 
 void SequencesCalculator::calculateGenerators(vector<set<Sequence*> >sequences, string file){
-
+    unmarkAllSequences(sequences);
     FileHelper f;
     vector<Sequence*> Generators;
-    cout<<"calculating Genarators"<<endl;
     for(auto it = sequences.rbegin(); it!=sequences.rend(); ++it){
-        cout<<"row"<<endl;
         set<Sequence*> row = *it;
         for(Sequence* s:row){
-            cout<<"sequence: "<<s->printSequence()<<" "<<s->isMarked()<<endl;
-            if(!s->isMarked()){
-                cout<<"Generators: "<<s->printSequence()<<endl;
-                Generators.push_back(s);
-            }
             vector<Sequence*> subsequences = s->getSubsequences();
             for(Sequence* subs:subsequences){
                 Sequence* subs_sup = getTheSameSequence(sequences, subs);
                 if(s->getSupport() == subs_sup->getSupport()){
-                    subs_sup->mark(true);
+                    s->mark(true);
                 }
+                delete subs;
+                if(s->isMarked()){
+                    break;
+                }
+            }
+        } 
+    }
+
+    for(set<Sequence*> row:sequences){
+        for(Sequence* s:row){
+            if(!s->isMarked())
+                Generators.push_back(s);
+        }
+    }
+
+    f.writeSequencesToFile(file, Generators);
+}
+
+void SequencesCalculator::calculateMaxsequences(vector<set<Sequence*> >sequences, string file){
+    unmarkAllSequences(sequences);
+    FileHelper f;
+    vector<Sequence*> maxSequences;
+    for(auto it = sequences.rbegin(); it!=sequences.rend(); ++it){
+        set<Sequence*> row = *it;
+        for(Sequence* s:row){
+            if(!s->isMarked()){
+                maxSequences.push_back(s);
+            }
+            vector<Sequence*> subsequences = s->getSubsequences();
+            for(Sequence* subs:subsequences){
+                Sequence* subs_sup = getTheSameSequence(sequences, subs);
+                subs_sup->mark(true);
                 delete subs;
             }
         }
     }
 
-    f.writeSequencesToFile(file, Generators
-}
-
-void SequencesCalculator::calculateMaxsequences(vector<set<Sequence*> >sequences, string file){
-
+    f.writeSequencesToFile(file, maxSequences);
 }
 
 Sequence* SequencesCalculator::getTheSameSequence(vector<set<Sequence*> >sequences, Sequence* sequence){
@@ -71,4 +89,12 @@ Sequence* SequencesCalculator::getTheSameSequence(vector<set<Sequence*> >sequenc
             return s;
     }
     return nullptr;
+}
+
+void SequencesCalculator::unmarkAllSequences(vector<set<Sequence*> >sequences){
+    for(set<Sequence*> row:sequences){
+        for(Sequence* s:row){
+            s->mark(false);
+        }
+    }
 }

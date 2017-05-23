@@ -17,8 +17,10 @@ public:
     static void calculateClosedSequences(vector<set<Sequence*> >sequences, string file);
     static void calculateGenerators(vector<set<Sequence*> >sequences, string file);
     static void calculateMaxsequences(vector<set<Sequence*> >sequences, string file);
-    static Sequence* getTheSameSequence(vector<set<Sequence*> >sequences, Sequence* sequence);
 
+private:
+    static Sequence* getTheSameSequence(vector<set<Sequence*> >sequences, Sequence* sequence);
+    static void unmarkAllSequences(vector<set<Sequence*> >sequences);
 };
 
 #endif // SEQUENCESCALCULATOR_H

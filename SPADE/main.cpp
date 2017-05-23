@@ -39,6 +39,7 @@ int main(int argc, char *argv[])
     vector<set<Sequence*> > freqSeq = spade.getFreqSequencesByLength();
     SequencesCalculator::calculateClosedSequences(freqSeq, "../result/closedSequences.txt");
     SequencesCalculator::calculateGenerators(freqSeq, "../result/Generators.txt");
+    SequencesCalculator::calculateMaxsequences(freqSeq, "../result/MaxSequences.txt");
 
     //cout<<"Frequent sequences: "<<endl;
     //printEncodedSequences(spade.getFrequentSequences(), spade.getAtomsCodeToName());
