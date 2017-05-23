@@ -6,9 +6,8 @@ GeneratorsRepNegativeBorder::GeneratorsRepNegativeBorder(string &generatorsFile,
 }
 
 int GeneratorsRepNegativeBorder::calculateSupport(Sequence* sequence){
-
+    return 0;
 }
 
 void GeneratorsRepNegativeBorder::calculateSupport(string& inputFile, string& outputFile){
-
 }

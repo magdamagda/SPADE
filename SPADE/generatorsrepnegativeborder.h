@@ -4,6 +4,8 @@
 #include "representation.h"
 #include <string>
 
+using namespace std;
+
 class GeneratorsRepNegativeBorder: public Representation
 {
 public:
