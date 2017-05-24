@@ -16,7 +16,8 @@ public:
     static void writeCodeToNameMapToFile(const string &fileName, const unordered_map<unsigned int, string> &codeToName);
     static unordered_map<string, unsigned int> readNameToCodeMap(const string &fileName);
     static vector<Sequence*> readSequences(const string& fileName);
-    static vector<Sequence*> readSequences(const string& fileName, const unordered_map<unsigned int, string>& codeToName);
+    static vector<Sequence*> readSequences(const string& fileName, const unordered_map<string, unsigned int>& codeToName);
+    static vector<Sequence*> readSequencesWithSupport(const string& fileName);
 };
 
 #endif // SEQUENCESWRITER_H

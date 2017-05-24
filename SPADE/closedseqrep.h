@@ -6,13 +6,14 @@
 #include "representation.h"
 #include <string>
 #include "filehelper.h"
+#include <unordered_map>
 
 using namespace std;
 
 class ClosedSeqRep: public Representation
 {
 public:
-    ClosedSeqRep(string& closedSeqFile, string& codesFile);
+    ClosedSeqRep(string& closedSeqFile, unordered_map<string, unsigned int>& nameToCode);
     virtual int calculateSupport(Sequence* sequence);
     virtual void calculateSupport(string& inputFile, string& outputFile);
 

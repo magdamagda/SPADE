@@ -4,6 +4,7 @@
 #include <vector>
 #include "sequence.h"
 #include <string>
+#include <unordered_map>
 
 using namespace std;
 
@@ -13,6 +14,9 @@ public:
     Representation();
     virtual int calculateSupport(Sequence* sequence)=0;
     virtual void calculateSupport(string& inputFile, string& outputFile)=0;
+
+protected:
+    unordered_map<string, unsigned int> atomsNameToCode;
 
 };
 

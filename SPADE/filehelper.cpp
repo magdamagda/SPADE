@@ -31,5 +31,17 @@ void FileHelper::writeCodeToNameMapToFile(const string& fileName, const unordere
 }
 
 unordered_map<string, unsigned int> FileHelper::readNameToCodeMap(const string& fileName){
-    return unordered_map<string, unsigned int>();
+
+}
+
+vector<Sequence*> FileHelper::readSequences(const string& fileName){
+
+}
+
+vector<Sequence*> FileHelper::readSequences(const string& fileName, const unordered_map<string, unsigned int>& codeToName){
+
+}
+
+vector<Sequence*> FileHelper::readSequencesWithSupport(const string& fileName){
+
 }

@@ -1,6 +1,6 @@
 #include "generatorsrepnegativeborder.h"
 
-GeneratorsRepNegativeBorder::GeneratorsRepNegativeBorder(string &generatorsFile, string &negativeBorderFile, string &codesFile)
+GeneratorsRepNegativeBorder::GeneratorsRepNegativeBorder(string &generatorsFile, string &negativeBorderFile, unordered_map<string, unsigned int>& nameToCode)
 {
 
 }

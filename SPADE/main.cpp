@@ -40,9 +40,9 @@ int main(int argc, char *argv[])
     FileHelper::writeSequencesToFile("../results/minInfreqGenerators.txt", spade.getMinInfrequentGenerators());
 
     vector<set<Sequence*> > freqSeq = spade.getFreqSequencesByLength();
-    SequencesCalculator::calculateClosedSequences(freqSeq, "../result/closedSequences.txt");
-    SequencesCalculator::calculateGenerators(freqSeq, "../result/Generators.txt");
-    SequencesCalculator::calculateMaxsequences(freqSeq, "../result/MaxSequences.txt");
+    SequencesCalculator::calculateClosedSequences(freqSeq, "../results/closedSequences.txt");
+    SequencesCalculator::calculateGenerators(freqSeq, "../results/Generators.txt");
+    SequencesCalculator::calculateMaxsequences(freqSeq, "../results/MaxSequences.txt");
 
     /*int minSupport = 0;
     string datasetPath = "";
@@ -98,16 +98,17 @@ int main(int argc, char *argv[])
     }
 
     if(!sequencesPath.empty() && !sequencesResultPath.empty() && !itemsCodesPath.empty()){
+        unordered_map<string, unsigned int> nameToCode = FileHelper::readNameToCodeMap(itemCodesPath);
         if(!closedFrequentSequencesPath.empty()){
-            ClosedSeqRep r(closedFrequentSequencesPath, itemsCodesPath);
+            ClosedSeqRep r(closedFrequentSequencesPath, nameToCode);
             r.calculateSupport(sequencesPath, sequencesResultPath);
         }
         if(!frequentGeneratorsPath.empty() && !minInfrequentGeneratorsPath.empty()){
-            GeneratorsRepNegativeBorder r(frequentGeneratorsPath, minInfrequentGeneratorsPath, itemsCodesPath);
+            GeneratorsRepNegativeBorder r(frequentGeneratorsPath, minInfrequentGeneratorsPath, nameToCode);
             r.calculateSupport(sequencesPath, sequencesResultPath);
         }
         if(!frequentGeneratorsPath.empty() && !maxFrequentSequencesPath.empty()){
-            GeneratorsRepPositiveBorder r(frequentGeneratorsPath, maxFrequentSequencesPath, itemsCodesPath);
+            GeneratorsRepPositiveBorder r(frequentGeneratorsPath, maxFrequentSequencesPath, nameToCode);
             r.calculateSupport(sequencesPath, sequencesResultPath);
         }
     }*/
