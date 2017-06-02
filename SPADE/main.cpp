@@ -13,13 +13,13 @@
 #include "generatorsrepnegativeborder.h"
 #include "generatorsreppositiveborder.h"
 #include "tictoc.h"
-
+#include "configuration.h"
 
 using namespace std;
 
 int main(int argc, char *argv[])
 {
-    int minSupport = 0;
+    /*int minSupport = 0;
     string datasetPath = "";
     string frequentSequencesPath = "";
     string minInfrequentGeneratorsPath = "";
@@ -52,37 +52,44 @@ int main(int argc, char *argv[])
             sequencesResultPath = argv[i+1];
         else if(arg == "--codes")
             itemsCodesPath = argv[i+1];
+    }*/
+
+    if(argc != 2){
+        cout<<"Configuration file is missing."<<endl;
+        return 0;
     }
 
-    if(!datasetPath.empty()){
+    Configuration conf(argv[1]);
+
+    if(!conf.datasetPath.empty()){
         DataSetReader* dataReader = new DataSetReader();
         Spade spade;
         TicToc::tic();
-        spade.calculate(datasetPath, dataReader, minSupport, !minInfrequentGeneratorsPath.empty());
+        spade.calculate(conf.datasetPath, dataReader, conf.minSupport, !conf.minInfrequentGeneratorsPath.empty());
         TicToc::toc("SPADE");
-        if(!frequentSequencesPath.empty()){
-            FileHelper::writeEncodedSequencesToFile(frequentSequencesPath, spade.getFrequentSequences(), spade.getAtomsCodeToName());
+        if(!conf.frequentSequencesPath.empty()){
+            FileHelper::writeEncodedSequencesToFile(conf.frequentSequencesPath, spade.getFrequentSequences(), spade.getAtomsCodeToName());
             cout<<"Discovered "<<spade.getFrequentSequences().size()<<" frequent sequences"<<endl;
         }
-        if(!itemsCodesPath.empty())
-            FileHelper::writeCodeToNameMapToFile(itemsCodesPath, spade.getAtomsCodeToName());
-        if(!minInfrequentGeneratorsPath.empty()){
-            FileHelper::writeSequencesToFile(minInfrequentGeneratorsPath, spade.getMinInfrequentGenerators());
+        if(!conf.itemsCodesPath.empty())
+            FileHelper::writeCodeToNameMapToFile(conf.itemsCodesPath, spade.getAtomsCodeToName());
+        if(!conf.minInfrequentGeneratorsPath.empty()){
+            FileHelper::writeSequencesToFile(conf.minInfrequentGeneratorsPath, spade.getMinInfrequentGenerators());
             cout<<"Discovered "<<spade.getMinInfrequentGenerators().size()<<" minimal infrequent generators"<<endl;
         }
-        if(!closedFrequentSequencesPath.empty()){
+        if(!conf.closedFrequentSequencesPath.empty()){
             TicToc::tic();
-            SequencesCalculator::calculateClosedSequences(spade.getFreqSequencesByLength(), closedFrequentSequencesPath);
+            SequencesCalculator::calculateClosedSequences(spade.getFreqSequencesByLength(), conf.closedFrequentSequencesPath);
             TicToc::toc("Closed sequences");
         }
-        if(!frequentGeneratorsPath.empty()){
+        if(!conf.frequentGeneratorsPath.empty()){
             TicToc::tic();
-            SequencesCalculator::calculateGenerators(spade.getFreqSequencesByLength(), frequentGeneratorsPath);
+            SequencesCalculator::calculateGenerators(spade.getFreqSequencesByLength(), conf.frequentGeneratorsPath);
             TicToc::toc("Frequent generators");
         }
-        if(!maxFrequentSequencesPath.empty()){
+        if(!conf.maxFrequentSequencesPath.empty()){
             TicToc::tic();
-            SequencesCalculator::calculateMaxsequences(spade.getFreqSequencesByLength(), maxFrequentSequencesPath);
+            SequencesCalculator::calculateMaxsequences(spade.getFreqSequencesByLength(), conf.maxFrequentSequencesPath);
             TicToc::toc("Maximal sequences");
         }
     }
