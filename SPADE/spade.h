@@ -9,6 +9,7 @@
 #include <string>
 #include <map>
 #include <unordered_map>
+#include <unordered_set>
 #include <set>
 #include <iostream>
 #include <iterator>
@@ -43,7 +44,7 @@ private:
 
     unsigned int addToAtoms(string atom);
     vector <IdList*> readFrequentOneSeq(string& input, DataSetReader* dataReader, unsigned int minSup, bool generateMinInfGen);
-    vector <IdList*> temporalJoin(IdList* first, IdList* second);
+    unordered_map <Sequence*, vector<IdList*>> temporalJoin(IdList* first, IdList* second);
     IdList* equalityJoin(IdList* first, IdList* second);
     IdList* firstSecondJoin(IdList* first, IdList* second);
     void EnumerateFrequentSeq(vector <IdList*> sequences, unsigned int minSup, bool generateMinInfGen);
@@ -51,6 +52,7 @@ private:
     bool isSequenceFrequent(Sequence* sequence);
     void pruneInfrequentGenerators();
     void calculateFreqSequencesByLength();
+    vector < vector <Sequence* > > equiwalenceClasses(vector<Sequence*>);
 };
 
 #endif // SPADE_H

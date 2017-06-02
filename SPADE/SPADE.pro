@@ -37,7 +37,8 @@ SOURCES += main.cpp \
     generatorsreppositiveborder.cpp \
     generatorsrepnegativeborder.cpp \
     representation.cpp \
-    sequencescalculator.cpp
+    sequencescalculator.cpp \
+    tictoc.cpp
 
 HEADERS += \
     datasetreader.h \
@@ -50,4 +51,5 @@ HEADERS += \
     generatorsreppositiveborder.h \
     generatorsrepnegativeborder.h \
     representation.h \
-    sequencescalculator.h
+    sequencescalculator.h \
+    tictoc.h

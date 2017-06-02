@@ -11,13 +11,18 @@ void SequencesCalculator::calculateClosedSequences(vector<set<Sequence*> > seque
     vector<Sequence*> closedSequences;
     for(auto it = sequences.rbegin(); it!=sequences.rend(); ++it){
         set<Sequence*> row = *it;
+        int i = 0;
         for(Sequence* s:row){
+            i++;
             if(!s->isMarked()){
                 closedSequences.push_back(s);
             }
             vector<Sequence*> subsequences = s->getSubsequences();
             for(Sequence* subs:subsequences){
                 Sequence* subs_sup = getTheSameSequence(sequences, subs);
+                if(subs_sup == nullptr){
+                    cout<<"unexpected nullptr"<<endl;
+                }
                 if(s->getSupport() == subs_sup->getSupport()){
                     subs_sup->mark(true);
                 }
@@ -25,7 +30,7 @@ void SequencesCalculator::calculateClosedSequences(vector<set<Sequence*> > seque
             }
         }
     }
-
+    cout<<"Discovered "<<closedSequences.size()<<" closed sequences"<<endl;
     f.writeSequencesToFile(file, closedSequences);
 }
 
@@ -57,6 +62,7 @@ void SequencesCalculator::calculateGenerators(vector<set<Sequence*> >sequences, 
         }
     }
 
+    cout<<"Discovered "<<Generators.size()<<" frequent generators"<<endl;
     f.writeSequencesToFile(file, Generators);
 }
 
@@ -79,6 +85,7 @@ void SequencesCalculator::calculateMaxsequences(vector<set<Sequence*> >sequences
         }
     }
 
+    cout<<"Discovered "<<maxSequences.size()<<" maximal sequences"<<endl;
     f.writeSequencesToFile(file, maxSequences);
 }
 
@@ -91,8 +98,8 @@ Sequence* SequencesCalculator::getTheSameSequence(vector<set<Sequence*> >sequenc
     return nullptr;
 }
 
-void SequencesCalculator::unmarkAllSequences(vector<set<Sequence*> >sequences){
-    for(set<Sequence*> row:sequences){
+void SequencesCalculator::unmarkAllSequences(vector<set<Sequence *> > sequences){
+    for(set<Sequence*>& row:sequences){
         for(Sequence* s:row){
             s->mark(false);
         }

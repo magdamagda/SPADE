@@ -12,39 +12,14 @@
 #include "closedseqrep.h"
 #include "generatorsrepnegativeborder.h"
 #include "generatorsreppositiveborder.h"
+#include "tictoc.h"
 
 
 using namespace std;
 
-void printSequences(vector<Sequence*>& sequences){
-    for(Sequence* s:sequences){
-        cout<<s->printSequence()<<endl;
-    }
-}
-
-void printEncodedSequences(vector<Sequence*>& sequences, unordered_map<unsigned int, string>& codeToName){
-    for(Sequence* s:sequences){
-        cout<<s->printEncodedSequence(codeToName)<<endl;
-    }
-}
-
 int main(int argc, char *argv[])
 {
-    int minSup=2;
-    string filename="../datasets/zaki.txt";
-    DataSetReader* dataReader = new DataSetReader();
-    Spade spade;
-    spade.calculate(filename, dataReader, minSup, true);
-    FileHelper::writeEncodedSequencesToFile("../results/freqSequences.txt", spade.getFrequentSequences(), spade.getAtomsCodeToName());
-    FileHelper::writeCodeToNameMapToFile("../results/codeToNameMap.txt", spade.getAtomsCodeToName());
-    FileHelper::writeSequencesToFile("../results/minInfreqGenerators.txt", spade.getMinInfrequentGenerators());
-
-    vector<set<Sequence*> > freqSeq = spade.getFreqSequencesByLength();
-    SequencesCalculator::calculateClosedSequences(freqSeq, "../results/closedSequences.txt");
-    SequencesCalculator::calculateGenerators(freqSeq, "../results/Generators.txt");
-    SequencesCalculator::calculateMaxsequences(freqSeq, "../results/MaxSequences.txt");
-
-    /*int minSupport = 0;
+    int minSupport = 0;
     string datasetPath = "";
     string frequentSequencesPath = "";
     string minInfrequentGeneratorsPath = "";
@@ -82,22 +57,37 @@ int main(int argc, char *argv[])
     if(!datasetPath.empty()){
         DataSetReader* dataReader = new DataSetReader();
         Spade spade;
-        spade.calculate(filename, dataReader, minSupport, !minInfrequentGeneratorsPath.empty());
-        if(!frequentSequencesPath.empty())
+        TicToc::tic();
+        spade.calculate(datasetPath, dataReader, minSupport, !minInfrequentGeneratorsPath.empty());
+        TicToc::toc("SPADE");
+        if(!frequentSequencesPath.empty()){
             FileHelper::writeEncodedSequencesToFile(frequentSequencesPath, spade.getFrequentSequences(), spade.getAtomsCodeToName());
+            cout<<"Discovered "<<spade.getFrequentSequences().size()<<" frequent sequences"<<endl;
+        }
         if(!itemsCodesPath.empty())
             FileHelper::writeCodeToNameMapToFile(itemsCodesPath, spade.getAtomsCodeToName());
-        if(!minInfrequentGeneratorsPath.empty())
+        if(!minInfrequentGeneratorsPath.empty()){
             FileHelper::writeSequencesToFile(minInfrequentGeneratorsPath, spade.getMinInfrequentGenerators());
-        if(!closedFrequentSequencesPath.empty())
+            cout<<"Discovered "<<spade.getMinInfrequentGenerators().size()<<" minimal infrequent generators"<<endl;
+        }
+        if(!closedFrequentSequencesPath.empty()){
+            TicToc::tic();
             SequencesCalculator::calculateClosedSequences(spade.getFreqSequencesByLength(), closedFrequentSequencesPath);
-        if(!frequentGeneratorsPath.empty())
+            TicToc::toc("Closed sequences");
+        }
+        if(!frequentGeneratorsPath.empty()){
+            TicToc::tic();
             SequencesCalculator::calculateGenerators(spade.getFreqSequencesByLength(), frequentGeneratorsPath);
-        if(!maxFrequentSequencesPath.empty())
+            TicToc::toc("Frequent generators");
+        }
+        if(!maxFrequentSequencesPath.empty()){
+            TicToc::tic();
             SequencesCalculator::calculateMaxsequences(spade.getFreqSequencesByLength(), maxFrequentSequencesPath);
+            TicToc::toc("Maximal sequences");
+        }
     }
 
-    if(!sequencesPath.empty() && !sequencesResultPath.empty() && !itemsCodesPath.empty()){
+    /*if(!sequencesPath.empty() && !sequencesResultPath.empty() && !itemsCodesPath.empty()){
         unordered_map<string, unsigned int> nameToCode = FileHelper::readNameToCodeMap(itemCodesPath);
         if(!closedFrequentSequencesPath.empty()){
             ClosedSeqRep r(closedFrequentSequencesPath, nameToCode);

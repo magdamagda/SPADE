@@ -4,6 +4,7 @@
 #include <vector>
 #include <string>
 #include <set>
+#include <unordered_set>
 #include "filehelper.h"
 #include "sequence.h"
 #include <iostream>
