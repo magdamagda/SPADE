@@ -15,6 +15,7 @@ void Configuration::parseConfiguration(std::string path){
         read_xml(is, pt);
         this->minSupport = pt.get<int>("config.min-support");
         this->datasetPath = pt.get<std::string>("config.dataset");
+        this->frequentSequencesPath = pt.get<std::string>("config.freq-sequences");
         this->minInfrequentGeneratorsPath = pt.get<std::string>("config.min-inf-generators");
         this->closedFrequentSequencesPath = pt.get<std::string>("config.freq-closed-seq");
         this->frequentGeneratorsPath = pt.get<std::string>("config.freq-generators");
@@ -24,5 +25,6 @@ void Configuration::parseConfiguration(std::string path){
         this->sequencesPath = pt.get<std::string>("config.sequences");
         this->sequencesResultPath = pt.get<std::string>("config.sequences-support");
 
+        fb.close();
     }
 }

@@ -13,6 +13,7 @@
 #include <set>
 #include <iostream>
 #include <iterator>
+#include "tictoc.h"
 
 class Spade
 {

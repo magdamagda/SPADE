@@ -64,9 +64,9 @@ int main(int argc, char *argv[])
     if(!conf.datasetPath.empty()){
         DataSetReader* dataReader = new DataSetReader();
         Spade spade;
-        TicToc::tic();
+        //TicToc::tic();
         spade.calculate(conf.datasetPath, dataReader, conf.minSupport, !conf.minInfrequentGeneratorsPath.empty());
-        TicToc::toc("SPADE");
+        //TicToc::toc("SPADE");
         if(!conf.frequentSequencesPath.empty()){
             FileHelper::writeEncodedSequencesToFile(conf.frequentSequencesPath, spade.getFrequentSequences(), spade.getAtomsCodeToName());
             cout<<"Discovered "<<spade.getFrequentSequences().size()<<" frequent sequences"<<endl;

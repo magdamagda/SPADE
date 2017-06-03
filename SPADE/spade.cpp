@@ -6,17 +6,23 @@ Spade::Spade()
 }
 
 void Spade::calculate(string& input, DataSetReader* dataReader, unsigned int minSup, bool generateMinInfGen){
+    TicToc::tic();
     vector<IdList*> freqOneSeq = this->readFrequentOneSeq(input, dataReader, minSup, generateMinInfGen);
     this->EnumerateFrequentSeq(freqOneSeq, minSup, generateMinInfGen);
     this->calculateFreqSequencesByLength();
+    TicToc::toc("SPADE");
     if(generateMinInfGen){
+        TicToc::tic();
         this->pruneInfrequentGenerators();
+        TicToc::toc("Minimal infrequent generators");
     }
 }
 
 vector <IdList*> Spade::readFrequentOneSeq(string& input, DataSetReader* dataReader, unsigned int minSup, bool generateMinInfGen){
     set<int> allSequencesNum;
-    dataReader->open(input);
+    if(!dataReader->open(input)){
+        throw "File exception";
+    }
     vector <IdList*> oneSeq;
     map<unsigned int, IdList*> atomsIdLists;
     Transaction* t = dataReader->getTransaction();

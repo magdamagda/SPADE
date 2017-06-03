@@ -15,17 +15,26 @@ bool DataSetReader::end(){
 }
 
 Transaction *DataSetReader::getTransaction(){
-    if(f.eof())
+    try{
+        if(!f.good())
+            return nullptr;
+        Transaction* transaction = new Transaction;
+        int n;
+        string item;
+        if(f>>transaction->sid){
+            f>>transaction->eid>>n;
+            for(int i=0; i<n; i++){
+                f>>item;
+                transaction->items.push_back(item);
+            }
+            return transaction;
+        }
         return nullptr;
-    Transaction* transaction = new Transaction;
-    int n;
-    string item;
-    f>>transaction->sid>>transaction->eid>>n;
-    for(int i=0; i<n; i++){
-        f>>item;
-        transaction->items.push_back(item);
     }
-    return transaction;
+    catch(exception e){
+        cout<<"Error reading file"<<endl;
+        return nullptr;
+    }
 }
 
 void DataSetReader::close(){
