@@ -1,6 +1,6 @@
 <config>
-	<dataset>../datasets/zaki.txt</dataset>
-	<min-support>2</min-support>
+	<dataset>../datasets/tag.data</dataset>
+	<min-support>16</min-support>
 	<freq-sequences>../results/freqseq.txt</freq-sequences>
 	<min-inf-generators>../results/mingen.txt</min-inf-generators>
 	<freq-closed-seq>../results/closed.txt</freq-closed-seq>
